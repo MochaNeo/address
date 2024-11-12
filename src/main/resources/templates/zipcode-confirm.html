@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>郵便番号確認</title>
+    <style>
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .zipcode-item {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .zipcode-item:last-child {
+            margin-bottom: 0;
+        }
+        .zipcode-item h2 {
+            color: #3498db;
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #e9ecef;
+            text-align: left;
+        }
+        th {
+            font-weight: bold;
+            width: 30%;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .back-link:hover {
+            background-color: #2980b9;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            th, td {
+                display: block;
+                width: 100%;
+            }
+            th {
+                margin-bottom: 5px;
+            }
+            td {
+                border-bottom: none;
+                padding-top: 0;
+            }
+            .zipcode-item {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>郵便番号確認結果</h1>
+        <div id="zipcodeList">
+            <!-- Thymeleafでリストをループして表示 -->
+            <div th:each="item : ${zipcodeList}">
+                <div class="zipcode-item">
+                    <h2>郵便番号: <span th:text="${item.zipcode}"></span></h2>
+                    <table>
+                        <tr>
+                            <th>都道府県コード</th>
+                            <td th:text="${item.prefcode}"></td>
+                        </tr>
+                        <tr>
+                            <th>都道府県名</th>
+                            <td th:text="${item.address1}"></td>
+                        </tr>
+                        <tr>
+                            <th>市区町村名</th>
+                            <td th:text="${item.address2}"></td>
+                        </tr>
+                        <tr>
+                            <th>町域名</th>
+                            <td th:text="${item.address3}"></td>
+                        </tr>
+                        <tr>
+                            <th>都道府県名カナ</th>
+                            <td th:text="${item.kana1}"></td>
+                        </tr>
+                        <tr>
+                            <th>市区町村名カナ</th>
+                            <td th:text="${item.kana2}"></td>
+                        </tr>
+                        <tr>
+                            <th>町域名カナ</th>
+                            <td th:text="${item.kana3}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <a href="/zipcode" class="back-link">戻る</a>
+    </div>
+</body>
+</html>

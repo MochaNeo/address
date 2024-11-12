@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>郵便番号検索</title>
+    <style>
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+        p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        button {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #3a7bc8;
+        }
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>郵便番号検索</h1>
+        <p>郵便番号を入力して、住所を検索します。</p>
+        <form id="zipcodeForm" method="POST" action="/zipcode/confirm">
+            <label for="zipcode">郵便番号</label>
+            <input type="text" id="zipcode" name="zipcode" placeholder="例: 123-4567" required>
+            <button type="submit">送信</button>
+        </form>
+        <p id="errorMessage" class="error-message" role="alert"></p>
+    </div>
+
+    <script>
+        document.getElementById('zipcodeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const zipcode = document.getElementById('zipcode').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            // 簡単な郵便番号の形式チェック（実際にはより厳密なチェックが必要です）
+            if (!/^\d{3}-?\d{4}$/.test(zipcode)) {
+                errorMessage.textContent = '無効な郵便番号です。正しい形式（例：123-4567）で入力してください。';
+                return;
+            }
+
+            // エラーメッセージをクリア
+            errorMessage.textContent = '';
+
+            // ここで実際のフォーム送信処理を行います
+            this.submit();
+
+            // 送信成功時の処理（実際の実装では非同期処理になる可能性があります）
+            console.log('郵便番号が送信されました:', zipcode);
+        });
+    </script>
+</body>
+</html>
