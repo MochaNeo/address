@@ -4,18 +4,24 @@ FROM gradle:8.5-jdk17 AS build
 # 作業ディレクトリを設定
 WORKDIR /app
 
-# Gradleファイルをコピー
-COPY build.gradle settings.gradle ./
-COPY gradle ./gradle
+# Gradleのキャッシュ改善のため、まずは依存関係のファイルのみをコピー
+COPY gradle gradle
+COPY gradlew .
+COPY gradlew.bat .
+COPY settings.gradle .
+COPY build.gradle .
+
+# Gradlewに実行権限を付与
+RUN chmod +x ./gradlew
 
 # 依存関係をダウンロード
-RUN gradle dependencies
+RUN ./gradlew dependencies --no-daemon
 
 # ソースコードをコピー
-COPY src ./src
+COPY src src
 
 # アプリケーションをビルド
-RUN gradle build -x test
+RUN ./gradlew build -x test --no-daemon
 
 # 実行ステージ
 FROM eclipse-temurin:17-jre-alpine
